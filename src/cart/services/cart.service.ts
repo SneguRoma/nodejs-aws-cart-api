@@ -19,9 +19,9 @@ export class CartService {
       items: [],
     };
 
-    this.userCarts[ userId ] = userCart;
+    this.userCarts[ userId ] = userCart as Cart;
 
-    return userCart;
+    return userCart as Cart;
   }
 
   findOrCreateByUserId(userId: string): Cart {
