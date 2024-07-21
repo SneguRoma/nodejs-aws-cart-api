@@ -9,11 +9,15 @@ export class InfrastructureStack extends cdk.Stack {
     super(scope, id, props);
 
     const nestLambda = new lambda.Function(this, 'NestLambda', {
-      runtime: lambda.Runtime.NODEJS_16_X,
+      runtime: lambda.Runtime.NODEJS_20_X,
       code: lambda.Code.fromAsset(path.join(__dirname, '../../dist')), 
-      handler: 'main.lambda.handler', // Укажите правильный путь к handler
+      handler: 'main.lambda.handler', 
       environment: {
-       
+        DATABASE_HOST: 'bakerydb.czuueys6ip67.eu-west-1.rds.amazonaws.com',
+        DATABASE_PORT: '5432', 
+        DATABASE_USER: 'postgres',
+        DATABASE_PASSWORD: 'postgres',
+        DATABASE_NAME: 'bakerydb',
       },
     });
 
