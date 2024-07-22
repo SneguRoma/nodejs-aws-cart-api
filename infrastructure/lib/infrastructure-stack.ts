@@ -33,6 +33,7 @@ export class InfrastructureStack extends cdk.Stack {
         DATABASE_PASSWORD: 'postgres',
         DATABASE_NAME: 'bakerydb',
       },
+      timeout: cdk.Duration.seconds(900),
     });
 
     
@@ -43,6 +44,11 @@ export class InfrastructureStack extends cdk.Stack {
     
     const api = new apigateway.LambdaRestApi(this, 'NestApi', {
       handler: nestLambda,
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        allowMethods: apigateway.Cors.ALL_METHODS,
+        allowHeaders: ['Content-Type', 'Authorization'],
+      }
     });
   }
 }
