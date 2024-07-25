@@ -3,43 +3,30 @@ import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as path from 'path';
-import * as nodejs from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export class InfrastructureStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    /* const nestLambda = new lambda.Function(this, 'NestLambda', {
-      runtime: lambda.Runtime.NODEJS_20_X,
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../lambda.zip')), 
-      handler: 'dist/src/main.lambda.handler', 
-      environment: {
-        DATABASE_HOST: 'bakerydb.czuueys6ip67.eu-west-1.rds.amazonaws.com',
-        DATABASE_PORT: '5432', 
-        DATABASE_USER: 'postgres',
-        DATABASE_PASSWORD: 'postgres',
-        DATABASE_NAME: 'bakerydb',
-      },
-    }); */
+  
 
     const nestLambda = new lambda.Function(this, 'NestLambda', {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: 'src/main.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../dist')),
       environment: {
-        DATABASE_HOST: 'bakerydb.czuueys6ip67.eu-west-1.rds.amazonaws.com',
-        DATABASE_PORT: '5432', 
-        DATABASE_USER: 'postgres',
-        DATABASE_PASSWORD: 'postgres',
-        DATABASE_NAME: 'bakerydb',
+        DATABASE_HOST: process.env.DB_HOST || 'bakerydb.czuueys6ip67.eu-west-1.rds.amazonaws.com',
+        DATABASE_PORT: process.env.DB_PORT || '5432', 
+        DATABASE_USER: process.env.DB_NAME || '',
+        DATABASE_PASSWORD: process.env.DB_PASSWORD || '',
+        DATABASE_NAME: process.env.DB_NAME || 'bakerydb',
       },
       timeout: cdk.Duration.seconds(900),
     });
 
-    
-    /* new apigateway.LambdaRestApi(this, 'NestApi', {
-      handler: lambdaFunction,
-    }); */
 
     
     const api = new apigateway.LambdaRestApi(this, 'NestApi', {

@@ -7,6 +7,9 @@ import { AppModule } from './app.module';
 import { Callback,Handler, Context, APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
 import * as serverlessExpress from 'aws-serverless-express';
 import { Server } from 'http';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 let server: Server;
 
@@ -25,14 +28,12 @@ async function bootstrap() {
   console.log('serverlessExpress:', serverlessExpress);
 
   const expressApp = app.getHttpAdapter().getInstance();
-  //return serverlessExpress.createServer( expressApp );
+  
   const server = serverlessExpress.createServer(expressApp);
   return server;
 
 }
-/* bootstrap().then(() => {
-  console.log('App is running on %s port', port);
-}); */
+
 
 export const handler: Handler = async (event: any, context: Context, callback: Callback ) => {
   try {
