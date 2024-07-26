@@ -20,9 +20,9 @@ export class InfrastructureStack extends cdk.Stack {
       environment: {
         DATABASE_HOST: process.env.DB_HOST || 'bakerydb.czuueys6ip67.eu-west-1.rds.amazonaws.com',
         DATABASE_PORT: process.env.DB_PORT || '5432', 
-        DATABASE_USER: process.env.DB_NAME || '',
-        DATABASE_PASSWORD: process.env.DB_PASSWORD || '',
-        DATABASE_NAME: process.env.DB_NAME || 'bakerydb',
+        DATABASE_USER: process.env.DB_NAME || 'postgres',
+        DATABASE_PASSWORD: process.env.DB_PASSWORD || 'postgres',
+        DATABASE_NAME: process.env.DB_NAME || 'bakeryDb',
       },
       timeout: cdk.Duration.seconds(900),
     });

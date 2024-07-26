@@ -13,12 +13,20 @@ export class CartService {
   private userCarts: Record<string, Cart> = {};
 
   async findByUserId(userId: string): Promise<Cart> {
+    
     /* return this.userCarts[ userId ]; */
     const query = `
-      'SELECT * FROM carts WHERE user_id = $1', [userId]
+      SELECT * FROM carts WHERE user_id = $1
     `;
-    const result = await this.databaseService.query(query);
-    return result.rows[0];
+    const values = [userId];
+    
+    const result = await this.databaseService.query(query, values);
+    const items = await this.databaseService.query(
+      `SELECT product_id, count FROM cart_items WHERE cart_id = $1`,
+      [result.rows[0].id],
+    )
+    
+    return {...result.rows[0], items: items.rows};
 
   }
   
@@ -35,9 +43,9 @@ export class CartService {
     return userCart as Cart; */
     
     const query = `
-      'INSERT INTO carts (id, user_id, created_at, updated_at, status) VALUES ($1, $2, $3, $4, $5)',
-      [id, userId, new Date(), new Date(), 'OPEN']
+      INSERT INTO carts (id, user_id, created_at, updated_at, status) VALUES ($1, $2, $3, $4, $5)
     `;
+    const values = [id, userId, new Date(), new Date(), 'OPEN'];
     await this.databaseService.query(query);
     return this.findByUserId(userId);
 

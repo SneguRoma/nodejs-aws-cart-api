@@ -23,7 +23,7 @@ async function bootstrap() {
   });
   app.use(helmet());
 
-  /* await app.listen(port); */
+  
   await app.init();
   console.log('serverlessExpress:', serverlessExpress);
 
@@ -33,20 +33,44 @@ async function bootstrap() {
   return server;
 
 }
+bootstrap().then(() => {
+  console.log('App is running on %s port', port);
+});
 
+export const handler: Handler = async (event: any, context: Context, callback: Callback,) => {
+  //console.log('Received event:', JSON.stringify(event, null, 2));
+  //  console.log('Context:', JSON.stringify(context, null, 2));
+  server = server ?? (await bootstrap());
+ // console.log('Event:', JSON.stringify(event, null, 2));
+  const resServer = serverlessExpress.proxy(server, event, context, 'PROMISE').promise;
+  console.log('resServer:',  resServer);
+  return resServer;
 
-export const handler: Handler = async (event: any, context: Context, callback: Callback ) => {
-  try {
-    if (!server) {
-      server = await bootstrap();
-    }
-    return serverlessExpress.proxy(server, event, context, 'CALLBACK', callback);
-  } catch (error) {
-    console.error('Error during handling the request:', error);
-    callback(error);
-  }
+ 
 };
 
+/* import { NestFactory } from '@nestjs/core';
+
+import helmet from 'helmet';
+
+import { AppModule } from './app.module';
+
+const port = process.env.PORT || 4000;
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: (req, callback) => callback(null, true),
+  });
+  app.use(helmet());
+
+  await app.listen(port);
+}
+bootstrap().then(() => {
+  console.log('App is running on %s port', port);
+});
+ */
 
 
 
