@@ -21,7 +21,7 @@ select * from carts
 
 INSERT INTO carts (id, user_id, created_at, updated_at, status)
 VALUES 
-  (gen_random_uuid(), gen_random_uuid(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'OPEN'),
+  (gen_random_uuid(), '37f37fa4-e3eb-4195-b984-b6e1e736c4a5', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'OPEN'),
   (gen_random_uuid(), gen_random_uuid(), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'ORDERED');
 
 INSERT INTO cart_items (cart_id, product_id, count)
