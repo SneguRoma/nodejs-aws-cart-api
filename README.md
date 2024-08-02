@@ -1,3 +1,19 @@
+```create docker image 
+$ npm run docker:build   
+```
+
+```create docker image 
+$ npm run docker:run  
+```
+
+```init eb instance
+$  eb init
+```
+
+```create eb instance
+$  eb create --single
+```
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
