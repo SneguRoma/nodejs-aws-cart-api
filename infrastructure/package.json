@@ -25,6 +25,7 @@
     "aws-lambda": "^1.0.7",
     "constructs": "^10.0.0",
     "dotenv": "^16.4.5",
+    "infrastructure": "file:",
     "source-map-support": "^0.5.21"
   }
 }

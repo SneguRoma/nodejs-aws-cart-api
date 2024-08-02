@@ -29,3 +29,5 @@ VALUES
   ((SELECT id FROM carts LIMIT 1), gen_random_uuid(), 2),
   ((SELECT id FROM carts LIMIT 1), gen_random_uuid(), 1),
   ((SELECT id FROM carts ORDER BY id DESC LIMIT 1), gen_random_uuid(), 3);
+
+  

@@ -6,13 +6,13 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    
+    "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -20,7 +20,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare:lambda": "npm run build && cp -r node_modules dist/ && cp package.json dist/",
-    "copy-modules": "xcopy /E /I node_modules dist\\node_modules"
+    "copy-modules": "xcopy /E /I node_modules dist\\node_modules",
+    "docker:build": "docker build -t my-cart-api .",
+    "docker:run": "docker run -d -p 4000:4000 --name cart-service-container my-cart-api"
   },
   "dependencies": {
     "@codegenie/serverless-express": "^4.14.1",
@@ -42,6 +44,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.12.0",
     "reflect-metadata": "^0.1.13",
+    "rs-checkout-api": "file:",
     "rxjs": "^7.8.1",
     "uuid": "^9.0.0"
   },

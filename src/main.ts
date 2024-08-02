@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+/* import { NestFactory } from '@nestjs/core';
 
 import helmet from 'helmet';
 
@@ -38,18 +38,17 @@ bootstrap().then(() => {
 });
 
 export const handler: Handler = async (event: any, context: Context, callback: Callback,) => {
-  //console.log('Received event:', JSON.stringify(event, null, 2));
-  //  console.log('Context:', JSON.stringify(context, null, 2));
+  
   server = server ?? (await bootstrap());
- // console.log('Event:', JSON.stringify(event, null, 2));
+
   const resServer = serverlessExpress.proxy(server, event, context, 'PROMISE').promise;
   console.log('resServer:',  resServer);
   return resServer;
 
- 
-};
+  
+};*/
 
-/* import { NestFactory } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 
 import helmet from 'helmet';
 
@@ -70,7 +69,7 @@ async function bootstrap() {
 bootstrap().then(() => {
   console.log('App is running on %s port', port);
 });
- */
+
 
 
 
